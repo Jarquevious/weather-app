@@ -19,8 +19,21 @@ class App extends React.Component {
       temp_min:undefined,
       descrpition:"",
       error:false
-    };  
-    this.getWeather();
+    };
+
+    this.weatherIcon = {
+      Thunderstorm: "wi-thunderstorm",
+      Drizzle: "wi-sleet",
+      Rain: "wi-storm-showers",
+      Snow: "wi-snow",
+      Atmosphere: "wi-fog",
+      Clear: "wi-day-sunny",
+      Clouds: "wi-day-fog"
+    };
+  }
+  calCelsius(temp){
+    let cell = Math.floor(temp - 273.15)
+    return cell;
   }
 
   getWeather= async() =>{
@@ -29,13 +42,8 @@ class App extends React.Component {
       );
     const response = await api_call.json();
     console.log(response);
-    
-    this.setState({
-      city:response.name,
-      country:response.sys.country
-    })
-  };
-  render(){
+
+  render() {
     return(
       <div className="App">
       <Weather 
