@@ -1,31 +1,40 @@
 import React from 'react';
+import "./weather.style.css";
 
+const weather=(props)=>{
+  return (
+    <div className="container text-light">
+      <div className="cards pt-4">
+       <h1>{"props.city"}, {"props.country"}</h1>
+        <h5 className="py-6">
+          <i className={"wi ${props.weatherIcon} display-1"}/>: null
+        </h5>
 
-const Weather = (props) => {
-    return (
-    <div className="container">
-     <div className="cards">  
-    <h1>
-     {props.city},{props.country}
-    </h1>
-      <h5 className="py-4">
-      <i class="wi wi-day-sunny display-1"></i>
-    <h1 className="py-2">{props.temp_celsius}&deg;</h1>
-      {/** show min and max temp */}
-      {minmaxTemp(props.temp_min, props.temp_max)}
-    <h4 className="py-3">{props.description}</h4>
-    </h5>
-     </div>
+        {/* Get Celsius */}
+        {props.temp_celsius  (<h1 className="py-2">{props.temp_celsius}&deg;</h1>
+        ) : null}
+
+        {/* show max and min temp */}
+        {maxminTemp(props.temp_min, props.temp_max)}
+
+        {/* Weather description */}
+        <h4 className="py-3">
+          {props.description}
+        </h4>
+      </div>
     </div>
-);
-};
-
-function minmaxTemp(min,max){
-    return (
-        <h3>
-            <span className="px-4">{min}&deg;</span>
-            <span className="px-4">{max}&deg;</span>
-        </h3>
-    );
+  );
 }
-export default Weather; 
+
+
+function maxminTemp(min,max) {
+  if (max && min) {
+    return (
+      <h3>
+        <span className="px-4">{min}&deg;</span>
+        <span className="px-4">{max}&deg;</span>
+      </h3>
+    );
+  }
+}
+export default weather
