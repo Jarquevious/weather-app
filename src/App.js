@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Weather from './app_component/weather.component';
 
 // make api call to this api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
-const api_key='7bbed3b952498bc85c6a7f8531694004';
+const api_key='1b9bdde623c7650cc0b0c3649f8ff7f2';
 class App extends React.Component {
 constructor(){
   super();
@@ -23,7 +23,7 @@ constructor(){
     
   };
   
-  this.getWeatherIcon(this.weatherIcon, this.response.weather[0].id);
+  // this.getWeatherIcon(this.weatherIcon, this.response.weather[0].id);
 
   this.weatherIcon = {
     Thunderstorm: "wi-thunderstorm",
@@ -75,34 +75,53 @@ getWeather = async e => {
   const country = e.target.elements.country.value;
   
   if (city && country) {
-    const api_call = await fetch('http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${api_key');
-    }
-
+    const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${api_key}`);
     const response = await api_call.json();
     console.log(response);
-
-              
+   
     this.setState({
-      city: response.name, 
-      country:response.sys.country,
+      city: `${response.name}, ${response.sys.country}`,
+      country: response.sys.country,
       main: response.weather[0].main,
       celsius: this.calCelsius(response.main.temp),
       temp_max: this.calCelsius(response.main.temp_max),
       temp_min: this.calCelsius(response.main.temp_min),
       description: response.weather[0].description,
-      icon:this.weatherIcon.Thunderstorm,
       error: false
     });
+    this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
 
-   
-  this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
-
-  } else: 
+  } else { 
     this.setState({
       error: true
     });
- 
+  }
 };
+    // const response = await api_call.json();
+    // console.log(response);
+
+              
+    // this.setState({
+    //   city: response.name, 
+    //   country:response.sys.country,
+    //   main: response.weather[0].main,
+    //   celsius: this.calCelsius(response.main.temp),
+    //   temp_max: this.calCelsius(response.main.temp_max),
+    //   temp_min: this.calCelsius(response.main.temp_min),
+    //   description: response.weather[0].description,
+    //   icon:this.weatherIcon.Thunderstorm,
+    //   error: false
+    // });
+
+   
+  // this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
+
+  // } else { 
+  //   this.setState({
+  //     error: true
+  //   });
+ 
+// };
 
 render() {
 return (
